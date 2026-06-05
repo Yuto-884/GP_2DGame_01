@@ -26,6 +26,9 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Instance.isStarted)
+            return;
+
         Move();
         Jump();
         Flip();

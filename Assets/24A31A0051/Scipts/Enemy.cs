@@ -1,22 +1,40 @@
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
-public class Enemy : MonoBehaviour
+public class Slime : MonoBehaviour
 {
     public float speed = 2f;
+    public float moveDistance = 3f;
 
     int dir = 1;
-    float timer = 0;
+    float startX;
+
+    async UniTaskVoid Start()
+    {
+        startX = transform.position.x;
+
+        await UniTask.WaitUntil(
+            () => GameManager.Instance.isStarted
+        );
+    }
 
     void Update()
     {
-        transform.Translate(Vector2.right * dir * speed * Time.deltaTime);
+        if (!GameManager.Instance.isStarted)
+            return;
 
-        timer += Time.deltaTime;
+        transform.Translate(
+            Vector2.right * dir * speed * Time.deltaTime
+        );
 
-        if (timer >= 2f)
+        if (transform.position.x >= startX + moveDistance)
         {
-            dir *= -1;
-            timer = 0;
+            dir = -1;
+        }
+
+        if (transform.position.x <= startX - moveDistance)
+        {
+            dir = 1;
         }
     }
 }
