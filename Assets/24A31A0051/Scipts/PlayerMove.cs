@@ -4,6 +4,7 @@ public class PlayerMove : MonoBehaviour
 {
     Rigidbody2D rb;
     SpriteRenderer sr;
+    Animator animator;
 
     public float speed = 5f;
     public float jumpPower = 10f;
@@ -13,10 +14,14 @@ public class PlayerMove : MonoBehaviour
     int jumpCount = 0;
     int maxJump = 2;
 
+    public int life = 100;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        isGrounded = true;
     }
 
     void Update()
@@ -24,6 +29,8 @@ public class PlayerMove : MonoBehaviour
         Move();
         Jump();
         Flip();
+
+        animator.SetBool("isJumping", !isGrounded);
     }
 
     void Move()
@@ -34,6 +41,8 @@ public class PlayerMove : MonoBehaviour
             x * speed,
             rb.linearVelocity.y
         );
+
+        animator.SetFloat("xVelocity", Mathf.Abs(x));
     }
 
     void Jump()
@@ -86,6 +95,16 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            life -= 10;
+
+            Debug.Log("残りライフ：" + life);
         }
     }
 }

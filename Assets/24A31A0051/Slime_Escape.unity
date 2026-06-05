@@ -1932,7 +1932,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hisa Character
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6550761234181432568, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761235745832915, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761233899429358, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761235166168111, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761234898366362, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761233895150576, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761233886518969, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761235834957032, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761234582043066, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
+    - {fileID: 6550761234824477149, guid: 3f455c34b1c30534891c2bc1c23411e6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
