@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -14,7 +15,15 @@ public class PlayerMove : MonoBehaviour
     int jumpCount = 0;
     int maxJump = 2;
 
-    public int life = 100;
+    public int life = 30;
+
+    public float minX = 0f;
+    public float maxX = 50f;
+
+    public float minY = -5f;
+    public float maxY = 20f;
+
+    public GameObject gameOverPanel;
 
     void Start()
     {
@@ -26,6 +35,8 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(GameManager.Instance.isStarted);
+
         if (!GameManager.Instance.isStarted)
             return;
 
@@ -34,6 +45,19 @@ public class PlayerMove : MonoBehaviour
         Flip();
 
         animator.SetBool("isJumping", !isGrounded);
+
+        ClampPosition();
+
+        // 落下判定
+        if (transform.position.y < -8)
+        {
+            Die();
+        }
+
+        if (life <= 0)
+        {
+            GameOver();
+        }
     }
 
     void Move()
@@ -109,5 +133,35 @@ public class PlayerMove : MonoBehaviour
 
             Debug.Log("残りライフ：" + life);
         }
+    }
+
+    void ClampPosition()
+    {
+        Vector3 pos = transform.position;
+
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+        transform.position = pos;
+    }
+
+    void Die()
+    {
+
+        life -= 10;
+
+        Debug.Log("残りライフ：" + life);
+
+        // とりあえずスタート地点へ戻す
+        transform.position = new Vector3(-9.07f, 2.79f, 0f);
+
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    void GameOver()
+    {
+        gameOverPanel.SetActive(true);
+
+        Time.timeScale = 0f;
     }
 }
